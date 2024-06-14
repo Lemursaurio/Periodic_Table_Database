@@ -1,4 +1,9 @@
 #! /bin/bash
+
+# ^ y $ en operaciones regex si se trabaja con strings
+# do y done en while, sentencia que usa las variables dentro de ellos
+# primero declaración y definición de función y luego su uso
+
 PSQL="psql --username=freecodecamp --dbname=periodic_table -t -c"
 
 SEARCH_DATA() {
