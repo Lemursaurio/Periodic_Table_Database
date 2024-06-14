@@ -10,12 +10,12 @@ SEARCH_DATA() {
 
   if [[ $1 =~ ^[0-9]+$ ]];
   then
-    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, p.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM elements e LEFT JOIN properties p USING(atomic_number) WHERE e.atomic_number = $1")
+    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, t.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM properties p LEFT JOIN elements e USING(atomic_number) LEFT JOIN types t USING (type_id) WHERE e.atomic_number = $1")
   elif [[ $1 =~ ^[a-zA-Z]{1,2}$ ]];
   then
-    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, p.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM elements e LEFT JOIN properties p USING(atomic_number) WHERE e.symbol = '$1'")
+    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, t.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM properties p LEFT JOIN elements e USING(atomic_number) LEFT JOIN types t USING (type_id) WHERE e.symbol = '$1'")
   else
-    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, p.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM elements e LEFT JOIN properties p USING(atomic_number) WHERE e.name = '$1'")
+    RESULT_DATA=$($PSQL "SELECT e.atomic_number, e.symbol, e.name, t.type, p.atomic_mass, p.melting_point_celsius, p.boiling_point_celsius FROM properties p LEFT JOIN elements e USING(atomic_number) LEFT JOIN types t USING (type_id) WHERE e.name = '$1'")
   fi
 
   if [[ -z $RESULT_DATA ]]
